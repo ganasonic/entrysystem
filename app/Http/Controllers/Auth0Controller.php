@@ -2,32 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Auth0\Laravel\Facade\Auth0;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+
 
 class Auth0Controller extends Controller
 {
-    public function callback(Request $request)
+    public function showLoginPrompt(): View
     {
-        // Auth0からユーザー情報を取得
-        $user = Auth0::getUser(); // 修正部分
+        return view('auth.login-prompt');
+    }
 
-        $user = auth()->user();//Auth0::user();
-        $user = Auth0::user();
+    public function showLoggedOut(): View
+    {
+        return view('auth.logged-out');
+    }
 
-        if (!$user) {
-            abort(401, 'Unauthorized');
+    public function showDashboard(): View
+    {
+        return view('dashboard');
+    }
+
+
+
+    public function private(): Response
+    {
+        return response('Welcome! You are logged in.');
+    }
+
+    public function scope(): Response
+    {
+        return response('You have `read:messages` permission, and can therefore access this resource.');
+    }
+
+    public function index(): Response|RedirectResponse
+    {
+        if (! auth()->check()) {
+            return redirect()->route('login'); // 未ログイン時はログイン誘導画面へリダイレクト
         }
 
-        // ユーザー情報をセッションに保存してログイン
-        auth()->loginUsingId($user['sub']); // sub を使ってユーザーをログイン
+        $user = auth()->user();
+        $name = $user->name ?? 'User';
+        $email = $user->email ?? '';
 
-        return redirect('/');
+        return response("Hello {$name}! Your email address is {$email}.");
     }
 
-    public function logout()
+    public function colors(): Response
     {
-        Auth0::logout();
-        return redirect('/');
+        $endpoint = Auth0::management()->users();
+
+        $colors = ['red', 'blue', 'green', 'black', 'white', 'yellow', 'purple', 'orange', 'pink', 'brown'];
+
+        $endpoint->update(
+            id: auth()->id(),
+            body: [
+                'user_metadata' => [
+                    'color' => $colors[random_int(0, count($colors) - 1)]
+                ]
+            ]
+        );
+
+        $metadata = $endpoint->get(auth()->id()); // Retrieve the user's metadata.
+        $metadata = Auth0::json($metadata); // Convert the JSON to a PHP array.
+
+        $color = $metadata['user_metadata']['color'] ?? 'unknown';
+        $name = auth()->user()->name;
+
+        return response("Hello {$name}! Your favorite color is {$color}.");
     }
+
+    public function logout(): RedirectResponse
+    {
+        Auth::logout();
+        return redirect()->route('logout');
+    }
+
 }
