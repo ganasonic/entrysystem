@@ -49,10 +49,17 @@
         </div>
     </nav>
 
+    @auth
     <div class="container">
         <h1>ようこそ、{{ Auth::user()->name ?? 'ゲスト' }} さん！</h1>
         <p class="lead">こちらは会員専用のページです。</p>
-        </div>
+    </div>
+    @include('main')
+    @else
+    <div class="container">
+        <h1>ログインしていません。</h1>
+    </div>
+    @endauth
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
