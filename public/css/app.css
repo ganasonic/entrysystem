@@ -1,0 +1,5 @@
+#player_list, #entry_list {
+    height: 300px; /* 例: 固定したい高さ */
+    overflow-y: auto; /* 縦方向にスクロールバーを表示 (内容が高さ超えた場合のみ) */
+    overflow-x: hidden; /* 横方向のスクロールバーは非表示 */
+}

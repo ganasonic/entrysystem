@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Entry System') }}</title>
 
     <!-- Scripts
     <script src="{{ asset('js/app.js') }}" defer></script>-->
@@ -32,7 +32,7 @@
 
 
 
-    <link href="{{ asset('css/gana.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -40,12 +40,15 @@
         @if(false)
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         @else
+<!--
         <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #e3f2fd;">
+-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         @endif
             <div class="container">
                 <!-- ナビゲーションバーのタイトル -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'Entry System') }}
                 </a>
 
                 <!-- ナビゲーションバーのタイトル -->
@@ -82,36 +85,17 @@
                                         <!--
                                         <li><a class="dropdown-item" href="/profile">プロフィール</a></li>
                                         -->
-                                        <li><a class="dropdown-item" href="/password/reset">パスワード変更</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('profilechange') }}">プロフィール変更</a></li>
                                         <li>
-                                            <a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
+                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                            ログアウト
                                             </a>
-                                            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                            <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
                                             @csrf
                                             </form>
                                         </li>
                                     </ul>
                                 </li>
-<!--
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
--->
                         @endguest
                     </ul>
                 </div>

@@ -29,7 +29,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url('/dashboard') }}">会員ページ</a>
+        <a class="navbar-brand" href="{{ url('/dashboard') }}">Competition Entry System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -40,9 +40,9 @@
                 </li>
                 <li class="nav-item">
                     @auth
-                    <a class="nav-link" href="{{ url('/logout') }}">ログアウト</a>
+                    <a class="nav-link" href="{{ route('logout') }}">ログアウト</a>
                     @else
-                    <a class="nav-link" href="{{ url('/login') }}">ログイン</a>
+                    <a class="nav-link" href="{{ route('login') }}">ログイン</a>
                     @endauth
                 </li>
             </ul>
@@ -51,8 +51,19 @@
 
     @auth
     <div class="container">
+        @if (false)
         <h1>ようこそ、{{ Auth::user()->name ?? 'ゲスト' }} さん！</h1>
-        <p class="lead">こちらは会員専用のページです。</p>
+        @else
+        <h2>ログイン中： {{ $loginname ?? 'ゲスト' }} さん</h2>
+        @endif
+        <p class="lead">FreeStyle Ski Competition Entry Systemの会員専用のページです。</p>
+
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
     </div>
     @include('main')
     @else

@@ -33,10 +33,18 @@
 </head>
 <body>
     <div class="login-container">
-        <h1>ようこそ！</h1>
+        <h1>エントリーシステム</h1>
+        <p class="lead">FreeStyle Ski Competition Entry System</p>
         <p class="lead">このコンテンツにアクセスするにはログインが必要です。</p>
         <a href="{{ url('/login') }}" class="btn btn-primary btn-lg">ログイン</a>
-        <p class="mt-3">アカウントをお持ちでない方は <a href="{{ url('/register') }}">新規登録</a></p>
+@if(false)
+        <p class="mt-3">アカウントをお持ちでない方は <a href="{{ url('/login?screen_hint=signup') }}">新規登録</a></p>
+@else
+        <p class="mt-3">アカウントをお持ちでない方は <a href="{{ route('signup') }}">新規登録</a></p>
+@endif
+@if(false)
+        <p class="mt-3">アカウントをお持ちでない方は <a href="{{ route('signup') }}">新規登録</a></p>
+@endif
     </div>
 </body>
 </html>

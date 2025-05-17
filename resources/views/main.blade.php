@@ -29,7 +29,7 @@
                         </div>
                         <div class="col">
                             <div class="d-grid">
-                                <a href="#" class="btn btn-lg btn-outline-info rounded-lg p-4 shadow">
+                                <a href="{{ route('entry.list') }}" class="btn btn-lg btn-outline-info rounded-lg p-4 shadow">
                                     <i class="fas fa-check-circle fa-3x mb-2"></i>
                                     <h5 class="mt-2">エントリー確認</h5>
                                     <p class="mb-0 text-muted">エントリー状況を確認します</p>
